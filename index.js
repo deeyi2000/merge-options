@@ -10,7 +10,7 @@ const defineProperty = (object, name, value) => Object.defineProperty(object, na
 	configurable: true
 });
 
-const globalThis = this;
+const _globalThis = globalThis || this;
 const defaultMergeOptions = {
 	concatArrays: false,
 	ignoreUndefined: false
@@ -152,7 +152,7 @@ function merge(merged, source, config) {
 }
 
 module.exports = function (...options) {
-	const config = merge(clone(defaultMergeOptions), (this !== globalThis && this) || {}, defaultMergeOptions);
+	const config = merge(clone(defaultMergeOptions), (this !== _globalThis && this) || {}, defaultMergeOptions);
 	let merged = {_: {}};
 
 	for (const option of options) {
